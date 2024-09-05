@@ -3,8 +3,10 @@ import express from "express";
 import { graphqlHTTP } from "express-graphql";
 import schema from "./graphql/productSchema.js";
 import sequelize from "./config/database.js";
+import cors from "cors";
 
 const app = express();
+app.use(cors()); // Enable CORS for cross-origin requests
 
 // Setup GraphQL
 app.use(
