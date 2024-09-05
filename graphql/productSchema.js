@@ -6,6 +6,7 @@ import {
   GraphQLFloat,
   GraphQLList,
   GraphQLSchema,
+  GraphQLInt,
 } from "graphql";
 import {
   getProducts,
@@ -47,6 +48,8 @@ const RootQuery = new GraphQLObjectType({
       args: {
         title: { type: GraphQLString },
         price: { type: GraphQLFloat },
+        limit: { type: GraphQLInt },    // Add limit argument
+        order: { type: GraphQLString }, // Add order argument for ASC or DESC
       },
       resolve(parent, args) {
         return getProductsByFilter(args);

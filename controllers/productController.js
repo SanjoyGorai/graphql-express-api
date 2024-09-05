@@ -28,17 +28,28 @@ export const deleteProduct = async (id) => {
   return await Product.destroy({ where: { id } });
 };
 
-export const getProductsByFilter = async ({ title, price }) => {
+export const getProductsByFilter = async ({ title, price, limit, order }) => {
   const whereClause = {};
 
   if (title) {
-    whereClause.title = { [Op.like]: `%${title}%` }; // Allows partial matching
+    whereClause.title = { [Op.like]: `%${title}%` };
   }
 
   if (price) {
     whereClause.price = price;
   }
 
-  const products = await Product.findAll({ where: whereClause });
+  // Default to a limit of 10 products if no limit is provided
+  const queryOptions = {
+    where: whereClause,
+    limit: limit || 10, // Set the limit, default to 10
+  };
+
+  // Order by creation date if 'order' is provided, default is descending
+  if (order === 'ASC' || order === 'DESC') {
+    queryOptions.order = [['createdAt', order]];
+  }
+
+  const products = await Product.findAll(queryOptions);
   return products;
 };
