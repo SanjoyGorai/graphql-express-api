@@ -46,8 +46,8 @@ export const getProductsByFilter = async ({ title, price, limit, order }) => {
   };
 
   // Order by creation date if 'order' is provided, default is descending
-  if (order === 'ASC' || order === 'DESC') {
-    queryOptions.order = [['createdAt', order]];
+  if (order === "ASC" || order === "DESC") {
+    queryOptions.order = [["createdAt", order]];
   }
 
   const products = await Product.findAll(queryOptions);
