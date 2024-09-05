@@ -13,6 +13,7 @@ import {
   createProduct,
   updateProduct,
   deleteProduct,
+  getProductsByFilter,
 } from "../controllers/productController.js";
 
 // Define the Product type
@@ -40,6 +41,16 @@ const RootQuery = new GraphQLObjectType({
       type: ProductType,
       args: { id: { type: GraphQLID } },
       resolve: async (parent, args) => await getProductById(args.id),
+    },
+    products: {
+      type: new GraphQLList(ProductType),
+      args: {
+        title: { type: GraphQLString },
+        price: { type: GraphQLFloat },
+      },
+      resolve(parent, args) {
+        return getProductsByFilter(args);
+      },
     },
   },
 });
